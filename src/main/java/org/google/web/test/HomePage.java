@@ -24,7 +24,7 @@ public class HomePage extends DriverProvider {
 
 	@Given("I am on the homepage")
 	public void openHomePage() {
-		driver.get("https://www.google.com/webhp?hl=en&output=search&ech=1&psi=Vp6JUNyJJMeK0AX0-oCYDg.1351196238788.5&emsg=NCSR&noj=1&ei=ZJ6JUMtb6ZjRBcingOgD");
+		driver.get("https://www.google.com/webhp?hl=en&noj=1");
 	}
 
 	@When("I search for <query>")
