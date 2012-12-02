@@ -34,6 +34,12 @@
 			<artifactId>objenesis</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.jbehave.web</groupId>
+			<artifactId>jbehave-web-selenium</artifactId>
+			<version>3.5.4</version>
+		</dependency>
 		<dependency>
 			<groupId>org.jbehave</groupId>
 			<artifactId>jbehave-spring</artifactId>
