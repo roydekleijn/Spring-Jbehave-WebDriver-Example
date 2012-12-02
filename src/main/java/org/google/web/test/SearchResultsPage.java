@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasItem;
 
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,8 @@ import org.google.web.common.WebDriverFactory;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
+import org.jbehave.web.selenium.WebDriverPage;
+import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -21,9 +24,16 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SearchResultsPage {
+public class SearchResultsPage extends WebDriverPage {
+	
+//	protected WebDriverProvider driver;
 
-	protected WebDriver driver;
+	public SearchResultsPage(WebDriverProvider provider) {
+		super(provider);
+//		this.driver = provider;
+	}
+
+//	protected WebDriver driver;
 
 	@FindBy(how = How.CSS, using = "h3.r")
 	private List<WebElement> searchResultTitles;
@@ -32,8 +42,7 @@ public class SearchResultsPage {
 
 	@BeforeScenario
 	public void setup() {
-		this.driver = WebDriverFactory.getWebDriver();
-		PageFactory.initElements(driver, this);
+		PageFactory.initElements(getDriverProvider().get(), this);
 	}
 
 	@Then("<query> is shown in the searchresulttitles")

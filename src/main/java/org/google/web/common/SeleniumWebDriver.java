@@ -22,16 +22,16 @@ public class SeleniumWebDriver implements WebDriver {
 	private MyCustomRemoteWebDriver remoteDriver;
 	private DesiredCapabilities capability;
 
-	public SeleniumWebDriver() throws IOException {
+	public SeleniumWebDriver() {
 		// Initialize parameters
 		url = System.getProperty("url", "http://www.google.com");
 		browser = System.getProperty("browser", "firefox");
 		grid = Boolean
 				.parseBoolean(System.getProperty("seleniumGrid", "false"));
+		setUp();
 	}
 
-	@BeforeStories
-	public void setUp() throws IOException {
+	public void setUp() {
 		MyEventListener eventListener = new MyEventListener(webDriver);
 		webDriver = new EventFiringWebDriver(new FirefoxDriver())
 				.register(eventListener);
@@ -39,7 +39,6 @@ public class SeleniumWebDriver implements WebDriver {
 		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 
-	@AfterStories
 	public void tearDown() {
 		webDriver.quit();
 	}

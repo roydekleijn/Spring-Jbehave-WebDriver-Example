@@ -4,17 +4,21 @@ import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 
 public class SeleniumWebDriverProvider implements WebDriverProvider {
-	 private WebDriver webDriver;
+	 private ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
 
      @Override
      public WebDriver get() {
-             return webDriver;
+    	 WebDriver driver = webDriver.get();
+    	 if(driver==null) {
+    		 System.out.println("webDriver is null");
+    	 }
+    	 return driver;
      }
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Initialize method;;");
+		webDriver.set(new SeleniumWebDriver());
 	}
 
 	@Override
@@ -25,8 +29,8 @@ public class SeleniumWebDriverProvider implements WebDriverProvider {
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
-		
+		webDriver.get().quit();
+		webDriver.remove();
 	}
 
 }

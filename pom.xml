@@ -110,7 +110,7 @@
 							<ignoreFailureInStories>false</ignoreFailureInStories>
 							<ignoreFailureInView>true</ignoreFailureInView>
 							<batch>false</batch>
-							<threads>1</threads>
+							<threads>3</threads>
 							<metaFilters>
 								<metaFilter>+group ${group}</metaFilter>
 							</metaFilters>

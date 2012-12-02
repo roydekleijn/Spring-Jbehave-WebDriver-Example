@@ -5,6 +5,8 @@ import static org.jbehave.core.reporters.Format.CONSOLE;
 import static org.jbehave.core.reporters.Format.HTML;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
@@ -37,13 +39,15 @@ public class GoogleWebStories extends JUnitStories {
     public GoogleWebStories() {
         Embedder embedder = configuredEmbedder();
         embedder.embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true)
-                .doIgnoreFailureInView(true).doVerboseFiltering(true).useThreads(1).useStoryTimeoutInSecs(1);
+                .doIgnoreFailureInView(true).doVerboseFiltering(true).useThreads(3).useStoryTimeoutInSecs(1);
+        embedder.useExecutorService(Executors.newFixedThreadPool(3));
     }
     
     
 
     @Override
     public Configuration configuration() {
+    	//driverProvider.initialize();
         configuration = makeConfiguration(this.getClass(), driverProvider);
         return configuration;
     }
@@ -54,7 +58,7 @@ public class GoogleWebStories extends JUnitStories {
             .useWebDriverProvider(driverProvider)
             .useSeleniumContext(seleniumContext)
             .useFailureStrategy(new FailingUponPendingStep())
-            .useStepMonitor(new SeleniumStepMonitor(contextView, new SeleniumContext(), new SilentStepMonitor()))
+            .useStepMonitor(new SeleniumStepMonitor(contextView, seleniumContext, new SilentStepMonitor()))
             .useStoryLoader(new LoadFromClasspath(embeddableClass.getClassLoader()))
             .useStoryReporterBuilder(
                 new StoryReporterBuilder()

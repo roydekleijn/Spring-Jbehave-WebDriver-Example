@@ -7,6 +7,10 @@
 
 	<bean id="provider" class="org.google.web.common.SeleniumWebDriverProvider" />
 
+	<bean id="lifeCycle" class="org.jbehave.web.selenium.PerStoryWebDriverSteps">
+		<constructor-arg ref="provider" />
+	</bean>
+
 	<bean id="DetailPage" class="org.google.web.test.HomePage">
 		<constructor-arg ref="provider" />
 	</bean>
