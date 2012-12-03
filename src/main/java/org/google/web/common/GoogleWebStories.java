@@ -31,16 +31,12 @@ public class GoogleWebStories extends JUnitStories {
     public GoogleWebStories() {
         Embedder embedder = configuredEmbedder();
         embedder.embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true)
-                .doIgnoreFailureInView(true).doVerboseFiltering(true);//.useStoryTimeoutInSecs(1)
-        //useThreads(3);
-        //embedder.useExecutorService(Executors.newFixedThreadPool(3));
+                .doIgnoreFailureInView(true).doVerboseFiltering(true);
+        //embedder.useExecutorService(MoreExecutors.sameThreadExecutor());
     }
     
-    
-
     @Override
     public Configuration configuration() {
-    	//driverProvider.initialize();
         configuration = makeConfiguration(this.getClass(), driverProvider);
         return configuration;
     }
@@ -74,4 +70,12 @@ public class GoogleWebStories extends JUnitStories {
 				codeLocationFromClass(this.getClass()), "**/*.story",
 				"**/excluded*.story");
 	}
+	
+	 // This Embedder is used by Maven or Ant and it will override anything set in the constructor
+//    public static class SameThreadEmbedder extends Embedder {
+//        public SameThreadEmbedder() {
+//            useExecutorService(MoreExecutors.sameThreadExecutor());
+//        }
+// 
+//    }
 }

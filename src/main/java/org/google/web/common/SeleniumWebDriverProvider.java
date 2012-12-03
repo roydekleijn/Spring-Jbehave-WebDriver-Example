@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 public class SeleniumWebDriverProvider implements WebDriverProvider {
 	 private ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
 
-	 //private static EventFiringWebDriver driver;
      @Override
      public WebDriver get() {
     	 WebDriver driver = webDriver.get();
@@ -40,5 +39,4 @@ public class SeleniumWebDriverProvider implements WebDriverProvider {
 		webDriver.get().quit();
 		webDriver.remove();
 	}
-
 }

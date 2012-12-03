@@ -29,10 +29,12 @@ public class SearchResultsPage extends WebDriverPage {
 
 	private List<String> resultTitles = new ArrayList<String>();
 
+	/*
 	@BeforeScenario
 	public void setup() {
 		PageFactory.initElements(getDriverProvider().get(), this);
 	}
+	*/	
 
 	@Then("<query> is shown in the searchresulttitles")
 	public void verifyTitle(@Named("query") String query)
