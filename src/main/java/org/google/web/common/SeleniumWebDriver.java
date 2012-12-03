@@ -1,28 +1,29 @@
 package org.google.web.common;
 
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import org.jbehave.core.annotations.AfterStories;
-import org.jbehave.core.annotations.BeforeStories;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.events.WebDriverEventListener;
 
 public class SeleniumWebDriver implements WebDriver {
 	public EventFiringWebDriver webDriver;
-	private String url;
-	private String browser;
-	private boolean grid;
+
 	private MyCustomRemoteWebDriver remoteDriver;
 	private DesiredCapabilities capability;
 
-	public SeleniumWebDriver() {
+	private String url;
+	private String browser;
+	private boolean grid;
+	
+	public SeleniumWebDriver() throws MalformedURLException {
 		// Initialize parameters
 		url = System.getProperty("url", "http://www.google.com");
 		browser = System.getProperty("browser", "firefox");
@@ -31,12 +32,24 @@ public class SeleniumWebDriver implements WebDriver {
 		setUp();
 	}
 
-	public void setUp() {
-		MyEventListener eventListener = new MyEventListener(webDriver);
-		webDriver = new EventFiringWebDriver(new FirefoxDriver())
-				.register(eventListener);
+	public void setUp() throws MalformedURLException {
+
+		capability = DesiredCapabilities.firefox();
+
+		remoteDriver = new MyCustomRemoteWebDriver(new URL(
+				"http://localhost:4444/wd/hub"), capability);
+		webDriver = new EventFiringWebDriver(remoteDriver);
+		WebDriverEventListener eventListener = new MyEventListener(webDriver);
+		webDriver.register(eventListener);
+
+		/*
+		 * MyEventListener eventListener = new MyEventListener(webDriver);
+		 * webDriver = new EventFiringWebDriver(new FirefoxDriver())
+		 * .register(eventListener);
+		 */
 		webDriver.manage().timeouts().pageLoadTimeout(45, TimeUnit.SECONDS);
 		webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
 	}
 
 	public void tearDown() {
@@ -107,5 +120,4 @@ public class SeleniumWebDriver implements WebDriver {
 	public TargetLocator switchTo() {
 		return webDriver.switchTo();
 	}
-
 }

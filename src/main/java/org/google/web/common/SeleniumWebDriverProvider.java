@@ -1,11 +1,14 @@
 package org.google.web.common;
 
+import java.net.MalformedURLException;
+
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.openqa.selenium.WebDriver;
 
 public class SeleniumWebDriverProvider implements WebDriverProvider {
 	 private ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
 
+	 //private static EventFiringWebDriver driver;
      @Override
      public WebDriver get() {
     	 WebDriver driver = webDriver.get();
@@ -18,7 +21,12 @@ public class SeleniumWebDriverProvider implements WebDriverProvider {
 	@Override
 	public void initialize() {
 		System.out.println("Initialize method;;");
-		webDriver.set(new SeleniumWebDriver());
+		try {
+			webDriver.set(new SeleniumWebDriver());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
