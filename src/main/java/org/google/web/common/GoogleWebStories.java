@@ -26,6 +26,8 @@ import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.WebDriverProvider;
 import org.springframework.context.ApplicationContext;
 
+import com.google.common.util.concurrent.MoreExecutors;
+
 public class GoogleWebStories extends JUnitStories {
 
 	private WebDriverProvider driverProvider = new SeleniumWebDriverProvider();
@@ -40,7 +42,7 @@ public class GoogleWebStories extends JUnitStories {
 		embedder.embedderControls().doGenerateViewAfterStories(true)
 				.doIgnoreFailureInStories(true).doIgnoreFailureInView(true)
 				.doVerboseFiltering(true);
-		// embedder.useExecutorService(MoreExecutors.sameThreadExecutor());
+		embedder.useExecutorService(MoreExecutors.sameThreadExecutor());
 	}
 
 	@Override
