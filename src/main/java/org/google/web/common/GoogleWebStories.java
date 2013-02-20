@@ -1,7 +1,7 @@
 package org.google.web.common;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.CONSOLE;
+import static org.jbehave.core.reporters.Format.*;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -23,7 +23,9 @@ import org.jbehave.core.steps.ParameterConverters.ExamplesTableConverter;
 import org.jbehave.core.steps.spring.SpringApplicationContextFactory;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.jbehave.web.selenium.SeleniumConfiguration;
+import org.jbehave.web.selenium.WebDriverHtmlOutput;
 import org.jbehave.web.selenium.WebDriverProvider;
+import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.springframework.context.ApplicationContext;
 
 import com.google.common.util.concurrent.MoreExecutors;
@@ -39,8 +41,8 @@ public class GoogleWebStories extends JUnitStories {
 
 	public GoogleWebStories() {
 		Embedder embedder = configuredEmbedder();
-		embedder.embedderControls().doGenerateViewAfterStories(true)
-				.doIgnoreFailureInStories(true).doIgnoreFailureInView(true)
+		embedder.embedderControls().doGenerateViewAfterStories(false)
+				.doIgnoreFailureInStories(false).doIgnoreFailureInView(false)
 				.doVerboseFiltering(true);
 		embedder.useExecutorService(MoreExecutors.sameThreadExecutor());
 	}
@@ -74,14 +76,14 @@ public class GoogleWebStories extends JUnitStories {
 						new LoadFromClasspath(embeddableClass.getClassLoader()))
 				.useStoryReporterBuilder(
 						new StoryReporterBuilder()
+						//.withMultiThreading(true)
 								.withCodeLocation(
 										CodeLocations
 												.codeLocationFromClass(embeddableClass))
 								.withDefaultFormats()
-								.withFormats(
-										CONSOLE,
-										new ScreenshootingHtmlFormat(
-												driverProvider)))
+								.withFormats(CONSOLE, TXT,
+										WebDriverHtmlOutput.WEB_DRIVER_HTML,
+										XML))
 				.useParameterConverters(parameterConverters);// new
 																// SeleniumContextOutput(seleniumContext),
 	}

@@ -7,13 +7,16 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 
-public class SeleniumWebDriver implements WebDriver {
+public class SeleniumWebDriver implements WebDriver, TakesScreenshot {
 	public EventFiringWebDriver webDriver;
 
 	private MyCustomRemoteWebDriver remoteDriver;
@@ -119,5 +122,12 @@ public class SeleniumWebDriver implements WebDriver {
 	@Override
 	public TargetLocator switchTo() {
 		return webDriver.switchTo();
+	}
+
+	@Override
+	public <X> X getScreenshotAs(OutputType<X> target)
+			throws WebDriverException {
+		// TODO Auto-generated method stub
+		return webDriver.getScreenshotAs(target);
 	}
 }

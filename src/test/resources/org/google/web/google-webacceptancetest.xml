@@ -18,4 +18,8 @@
 	<bean id="searchPage" class="org.google.web.test.SearchResultsPage">
 		<constructor-arg ref="provider" />
 	</bean>
+
+	<bean id="screenshot" class="org.jbehave.web.selenium.WebDriverScreenshotOnFailure">
+		<constructor-arg ref="provider" />
+	</bean>
 </beans>
