@@ -1,11 +1,6 @@
 package org.google.web.common;
 
-import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.*;
-
-import java.text.SimpleDateFormat;
-import java.util.List;
-
+import org.google.webdriver.DriverProvider;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.embedder.Embedder;
 import org.jbehave.core.failures.FailingUponPendingStep;
@@ -25,68 +20,77 @@ import org.jbehave.core.steps.spring.SpringStepsFactory;
 import org.jbehave.web.selenium.SeleniumConfiguration;
 import org.jbehave.web.selenium.WebDriverHtmlOutput;
 import org.jbehave.web.selenium.WebDriverProvider;
-import org.jbehave.web.selenium.WebDriverScreenshotOnFailure;
 import org.springframework.context.ApplicationContext;
 
-import com.google.common.util.concurrent.MoreExecutors;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Properties;
+
+import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
+import static org.jbehave.core.reporters.Format.CONSOLE;
+import static org.jbehave.core.reporters.Format.TXT;
+import static org.jbehave.core.reporters.Format.XML;
 
 public class GoogleWebStories extends JUnitStories {
 
-	private WebDriverProvider driverProvider = new SeleniumWebDriverProvider();
-	private Configuration configuration;
+	private WebDriverProvider driverProvider = new DriverProvider();
 
 	// private static ContextView contextView = new
 	// LocalFrameContextView().sized(640,120);
 	// private static SeleniumContext seleniumContext = new SeleniumContext();
 
 	public GoogleWebStories() {
-		Embedder embedder = configuredEmbedder();
-		embedder.embedderControls().doGenerateViewAfterStories(false)
-				.doIgnoreFailureInStories(false).doIgnoreFailureInView(false)
-				.doVerboseFiltering(true);
-		embedder.useExecutorService(MoreExecutors.sameThreadExecutor());
+    Embedder embedder = configuredEmbedder();
+
+    embedder.embedderControls().doGenerateViewAfterStories(true)
+        .doIgnoreFailureInStories(true).doIgnoreFailureInView(true)
+        .doVerboseFiltering(true);
 	}
 
-	@Override
-	public Configuration configuration() {
-		configuration = makeConfiguration(this.getClass(), driverProvider);
-		return configuration;
-	}
+  @Override
+  public Configuration configuration() {
+    Configuration configuration = makeConfiguration(this.getClass(),
+        driverProvider);
+    return configuration;
+  }
 
-	public static Configuration makeConfiguration(Class<?> embeddableClass,
-			WebDriverProvider driverProvider) {
-		// Start from default ParameterConverters instance
-		ParameterConverters parameterConverters = new ParameterConverters();
-		// factory to allow parameter conversion and loading from external
-		// resources (used by StoryParser too)
-		ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(
-				new LocalizedKeywords(),
-				new LoadFromClasspath(embeddableClass), parameterConverters);
-		// add custom converters
-		parameterConverters.addConverters(new DateConverter(
-				new SimpleDateFormat("yyyy-MM-dd")),
-				new ExamplesTableConverter(examplesTableFactory));
-		return new SeleniumConfiguration()
-				.useWebDriverProvider(driverProvider)
-				// .useSeleniumContext(seleniumContext)
-				.useFailureStrategy(new FailingUponPendingStep())
-				// .useStepMonitor(new SeleniumStepMonitor(contextView,
-				// seleniumContext, new SilentStepMonitor()))
-				.useStoryLoader(
-						new LoadFromClasspath(embeddableClass.getClassLoader()))
-				.useStoryReporterBuilder(
-						new StoryReporterBuilder()
-						//.withMultiThreading(true)
-								.withCodeLocation(
-										CodeLocations
-												.codeLocationFromClass(embeddableClass))
-								.withDefaultFormats()
-								.withFormats(CONSOLE, TXT,
-										WebDriverHtmlOutput.WEB_DRIVER_HTML,
-										XML))
-				.useParameterConverters(parameterConverters);// new
-																// SeleniumContextOutput(seleniumContext),
-	}
+  public static Configuration makeConfiguration(Class<?> embeddableClass,
+      WebDriverProvider driverProvider) {
+    Properties viewResources = new Properties();
+    viewResources.put("decorateNonHtml", "true");
+
+    // Start from default ParameterConverters instance
+    ParameterConverters parameterConverters = new ParameterConverters();
+    // factory to allow parameter conversion and loading from external
+    // resources (used by StoryParser too)
+    ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(
+        new LocalizedKeywords(),
+        new LoadFromClasspath(embeddableClass), parameterConverters);
+    // add custom converters
+    parameterConverters.addConverters(new DateConverter(
+        new SimpleDateFormat("yyyy-MM-dd")),
+        new ExamplesTableConverter(examplesTableFactory));
+
+    SeleniumConfiguration seleniumConfig = new SeleniumConfiguration();
+
+    seleniumConfig.useWebDriverProvider(driverProvider);
+    seleniumConfig.useStoryLoader(new LoadFromClasspath(embeddableClass.getClassLoader()));
+
+    StoryReporterBuilder reporter = new StoryReporterBuilder();
+    reporter.withCodeLocation(
+        CodeLocations
+            .codeLocationFromClass(embeddableClass))
+        .withDefaultFormats()
+        .withFormats(XML, CONSOLE, TXT, WebDriverHtmlOutput.WEB_DRIVER_HTML);
+    seleniumConfig
+        .useFailureStrategy(new FailingUponPendingStep())
+        // .useStepMonitor(new SeleniumStepMonitor(contextView,
+        // seleniumContext, new SilentStepMonitor()))
+        .useStoryReporterBuilder(reporter)
+        .useParameterConverters(parameterConverters);// new
+    // SeleniumContextOutput(seleniumContext),
+    return seleniumConfig;
+  }
 
 	@Override
 	public InjectableStepsFactory stepsFactory() {

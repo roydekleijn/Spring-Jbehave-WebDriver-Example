@@ -1,20 +1,19 @@
-package org.google.web.common;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.google.webdriver.listeners;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyEventListener implements WebDriverEventListener {
 	List<String> ignoreElements = new ArrayList<String>();
 
-	public MyEventListener(EventFiringWebDriver webDriver) {
+	public MyEventListener() {
 		ignoreElements.add("");
 	}
 

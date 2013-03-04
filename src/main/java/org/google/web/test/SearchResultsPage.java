@@ -1,11 +1,11 @@
 package org.google.web.test;
 
-import org.jbehave.web.selenium.WebDriverPage;
-import org.jbehave.web.selenium.WebDriverProvider;
+import org.google.web.common.BasePage;
+import org.google.webdriver.DriverProvider;
 
-public class SearchResultsPage extends WebDriverPage {
+public class SearchResultsPage extends BasePage {
 
-	public SearchResultsPage(WebDriverProvider provider) {
+	public SearchResultsPage(DriverProvider provider) {
 		super(provider);
 	}
 

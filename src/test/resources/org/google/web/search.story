@@ -1,10 +1,10 @@
-Sportal advertisement positions
+Tests 1
 
 Meta:
 @group google
 
 
-Scenario: search query
+Scenario: search query 3
 Given I am on the homepage
 When I search for <query>
 
@@ -14,7 +14,7 @@ Examples:
 |WebDriver|
 |JBehave|
 
-Scenario: search query
+Scenario: search query 4
 Given I am on the homepage
 When I search for <query>
 

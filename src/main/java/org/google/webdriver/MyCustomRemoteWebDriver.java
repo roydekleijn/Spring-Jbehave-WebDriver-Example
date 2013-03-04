@@ -1,4 +1,4 @@
-package org.google.web.common;
+package org.google.webdriver;
 
 import java.net.URL;
 import org.openqa.selenium.Capabilities;
