@@ -1,4 +1,4 @@
-package org.google.web.test;
+package org.google.web.pages;
 
 import org.google.web.common.BasePage;
 import org.google.webdriver.DriverProvider;

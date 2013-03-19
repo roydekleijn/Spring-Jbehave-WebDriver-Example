@@ -4,18 +4,18 @@ import org.google.webdriver.DriverProvider;
 import org.openqa.selenium.WebDriver;
 
 public class BasePage {
-  private DriverProvider driverProvider;
+	private DriverProvider driverProvider;
 
-  public BasePage(DriverProvider provider) {
-    this.driverProvider = provider;
-  }
+	public BasePage(DriverProvider provider) {
+		this.driverProvider = provider;
+	}
 
-  public DriverProvider getProvider() {
-    return driverProvider;
-  }
+	public DriverProvider getProvider() {
+		return driverProvider;
+	}
 
-  protected WebDriver getDriver() {
-    return driverProvider.get();
-  }
+	protected WebDriver getDriver() {
+		return driverProvider.get();
+	}
 
 }
