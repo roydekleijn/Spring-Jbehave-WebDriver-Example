@@ -7,6 +7,7 @@ Meta:
 Scenario: search query 3
 Given I am on the homepage
 When I search for <query>
+Then <query> is in resultlist
 
 Examples:
 |query|
@@ -17,6 +18,7 @@ Examples:
 Scenario: search query 4
 Given I am on the homepage
 When I search for <query>
+Then <query> is in resultlist
 
 Examples:
 |query|
