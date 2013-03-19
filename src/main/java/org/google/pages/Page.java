@@ -1,4 +1,4 @@
-package org.google.web.pages;
+package org.google.pages;
 
 public interface Page {
 

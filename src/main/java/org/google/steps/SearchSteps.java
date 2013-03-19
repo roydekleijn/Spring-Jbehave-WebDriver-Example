@@ -1,10 +1,10 @@
-package org.google.web.steps;
+package org.google.steps;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.google.web.common.BasePage;
-import org.google.web.pages.HomePage;
-import org.google.web.pages.SearchResultsPage;
+import org.google.common.BasePage;
+import org.google.pages.HomePage;
+import org.google.pages.SearchResultsPage;
 import org.google.webdriver.DriverProvider;
 import org.hamcrest.Matchers;
 import org.jbehave.core.annotations.Given;

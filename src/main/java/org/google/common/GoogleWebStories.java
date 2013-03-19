@@ -1,4 +1,4 @@
-package org.google.web.common;
+package org.google.common;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;

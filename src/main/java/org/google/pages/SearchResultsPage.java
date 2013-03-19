@@ -1,8 +1,8 @@
-package org.google.web.pages;
+package org.google.pages;
 
 import java.util.List;
 
-import org.google.web.common.BasePage;
+import org.google.common.BasePage;
 import org.google.webdriver.DriverProvider;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

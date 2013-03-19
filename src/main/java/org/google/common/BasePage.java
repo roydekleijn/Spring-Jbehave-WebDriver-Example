@@ -1,4 +1,4 @@
-package org.google.web.common;
+package org.google.common;
 
 import org.google.webdriver.DriverProvider;
 import org.openqa.selenium.WebDriver;
