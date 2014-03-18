@@ -6,11 +6,11 @@
 
   <bean id="provider" class="org.google.webdriver.DriverProvider" />
 
-  <bean id="lifeCycle" class="org.jbehave.web.selenium.PerStoryWebDriverSteps">
+  <bean id="lifeCycle" class="org.jbehave.web.selenium.PerScenarioWebDriverSteps">
     <constructor-arg ref="provider" />
   </bean>
 
-  <bean id="searchSteps" class="org.google.web.steps.SearchSteps">
+  <bean id="searchSteps" class="org.google.steps.SearchSteps">
     <constructor-arg ref="provider" />
   </bean>
 

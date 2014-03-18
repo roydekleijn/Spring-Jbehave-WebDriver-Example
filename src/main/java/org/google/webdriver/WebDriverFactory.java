@@ -19,6 +19,7 @@ public class WebDriverFactory {
 		if (grid) {
 			if (browser.equals("chrome")) {
 				capability = DesiredCapabilities.chrome();
+                capability.setVersion("33");
 			} else if (browser.equals("firefox")) {
 				capability = DesiredCapabilities.firefox();
 			} else if (browser.equals("iexplore")) {
@@ -28,7 +29,7 @@ public class WebDriverFactory {
 						.println("Unknown browser. Supported browsers are: chrome, firefox, iexplore");
 			}
 			MyCustomRemoteWebDriver remoteDriver = new MyCustomRemoteWebDriver(
-					new URL("http://localhost:4444/wd/hub"), capability);
+					new URL("http://127.0.0.1:4444/wd/hub"), capability);
 			webDriver = new EventFiringWebDriver(remoteDriver);
 			WebDriverEventListener eventListener = new MyEventListener();
 			return webDriver.register(eventListener);
