@@ -6,3 +6,5 @@ test-output
 doc
 chromedriver.log
 testng.out.xml
+.idea
+*.iml
