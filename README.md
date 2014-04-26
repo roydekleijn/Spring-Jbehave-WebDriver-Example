@@ -29,11 +29,11 @@ Run the project with the following run configurations:
 
     `mvn clean integration-test -Dgroup=google -DseleniumGrid=true`
 
-4. start the tests with a custom browser (Ensure drivers are up to date*)
+4. start the tests with a custom browser (Ensure drivers are up to date, See driver download locations below)
 
     `mvn clean integration-test -Dgroup=google -Dbrowser=chrome -DseleniumGrid=true`
     
 * Chrome: http://chromedriver.storage.googleapis.com/index.html
-  Internet Explorer: http://selenium-release.storage.googleapis.com/index.html
+* Internet Explorer: http://selenium-release.storage.googleapis.com/index.html
 
 
